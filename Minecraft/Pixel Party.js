@@ -37,7 +37,7 @@ let key = [
 
 let title = `[${gameInfo.abb}] ${serverInfo.name}'s ${subServerName} Gameplay #${id} [${key.map(arr => arr[0]).join(' ')}]`
 
-let description = `This is a play of ${subServerName}, a minigame of ${serverInfo.name}, a ${gameInfo.name} server. Played on ${date}.`
+let description = `This is a replay of ${subServerName}, a minigame of ${serverInfo.name}, a ${gameInfo.name} server. Played on ${date}.`
 
 if (extraDesc.length) description += '\n\n' + extraDesc.join('\n\n')
 
