@@ -6,13 +6,18 @@ import serverInfos from './modules/server-info.js'
 
 import modInfos from './modules/rbfnf-mod-info.js'
 
-const data = `FNB	Omnipresent			omnipresent	Original	Legacy	FALSE	FALSE	FALSE	1775	746	229	43	38	62	774	xXZAPTASTICXx	1525300	1525302	96.16	2022/8/7`
+const data = `
+FNB	Sweetheart			funkspace	Hard		FALSE	FALSE	FALSE	HD	223	307	69	7	0	1	480	288000	288027	98.41		2023/8/7
+`.trim()
 const recorder = 'Open Broadcaster Software (OBS Studio)'
 
 let extraDesc = [
+	// `Here are the last Malediction plays that I play on Friday Night Bloxxin'. As of circa 28 December 2022, the later update removeed this song along with Curse's related assets. The upload of the Bloxxin' Mix on YouTube has now been privatized. We'll meet again soon, my friend.`,
+	// `This is counted as a fail. The ending resulted in a kick in which is executed before the ending screen. No information can be obtained for the statistics. \n\nYou can see another run of mine in which I turned off the modcharts to get the statistics: https://youtu.be/qTAo7I8IDxA`,
 	// "I wanted to see how I perform on these stream maps in the morning. This is one of the three, which I uploaded in series.",
+	// `This is a trial of me recording plays in full screen. This type of plays are going to be occassional; not always.`,
 	extraDescTemplate['to1080pUpscale'],
-	// extraDescTemplate['copyrightMuted']
+	// extraDescTemplate['privacyReplaced']
 ]
 
 let [
@@ -23,41 +28,43 @@ let [
 	modId,
 	chartVariationReal,
 	chartVariationGame,
-	isLeftSide,
-	isNoModchart,
-	isNoGimmickNotes,
-	marvelousCount,
-	perfectCount,
-	goodCount,
-	okCount,
-	badCount,
-	missCount,
-	maxComboCount,
+	modLeftSideStr,
+	modNoModchartStr,
+	modNoGimmickNotesStr,
+	modOtherStr,
+	resultsMarveolus,
+	resultsPerfect,
+	resultsGood,
+	resultsOk,
+	resultsBad,
+	resultsMiss,
+	resultsMaxCombo,
+	resultsScoreMain,
+	resultsScoreAltsStr,
+	resultAccuracy,
 	opponentName,
-	score1,
-	score2,
-	accuracy,
-	dateString
+	replayDateStr
 ] = data.split('	')
 
-const date = new Date(dateString).toLocaleDateString('en-UK',  { year: 'numeric', month: 'long', day: 'numeric' })
+const replayDate = new Date(replayDateStr).toLocaleDateString('en-UK',  { year: 'numeric', month: 'long', day: 'numeric' })
 
-marvelousCount = parseInt(marvelousCount)
-perfectCount = parseInt(perfectCount)
-goodCount = parseInt(goodCount)
-okCount = parseInt(okCount)
-badCount = parseInt(badCount)
-missCount = parseInt(missCount)
-score1 = parseInt(score1)
-score2 = parseInt(score2)
-accuracy = parseFloat(accuracy.replace(',', '.'))
-isLeftSide = isLeftSide === "TRUE"
-isNoModchart = isNoModchart === "TRUE"
-isNoGimmickNotes = isNoGimmickNotes === "TRUE"
+resultsMarveolus = parseInt(resultsMarveolus)
+resultsPerfect = parseInt(resultsPerfect)
+resultsGood = parseInt(resultsGood)
+resultsOk = parseInt(resultsOk)
+resultsBad = parseInt(resultsBad)
+resultsMiss = parseInt(resultsMiss)
+resultsScoreMain = parseInt(resultsScoreMain)
+const resultsScoreAlts = resultsScoreAltsStr.split(' ').map(score => parseInt(score)).filter(a => a)
+const modOther = modOtherStr.split(' ').filter(a => a)
+resultAccuracy = parseFloat(resultAccuracy.replace(',', '.'))
+const modLeftSide = modLeftSideStr === "TRUE"
+const modNoModchart = modNoModchartStr === "TRUE"
+const modNoGimmickNotes = modNoGimmickNotesStr === "TRUE"
 
 const serverInfo = serverInfos[game]
 
-const modInfo = modInfos[modId]
+const modInfo = modInfos[modId] || null
 
 let key = {
 	'Clear': 'Completing a song, also known as passing.',
@@ -72,79 +79,97 @@ let key = {
 	'MA': 'Marvelous Ratio. The ratio of marvelous notes with perfect notes.',
 	'PA': 'Perfect Ratio. The ratio of perfect notes with great notes.',
 	'SA': 'Sick Ratio. The ratio of sick notes with great notes.',
-	'L-Side': "Left Side. The opposite side of the player's side (also known as the left side, opponent side, etc) is played.",
-	'NMC': 'No Modcharts. Modcharts are disabled on this play.',
-	'NGN': 'No Gimmick Notes. Gimmick notes are disabled on this play.',
-	'NG': 'No Gimmicks. Modcharts and gimmick notes are disabled on this play.'
+	'L-Side': "Left/Opponent Side. The opposite side of the player's side (also known as the left side, opponent side, etc) is played.",
+	'NMC': 'No Modcharts. Modcharts are disabled.',
+	'MC': 'Modcharts. Modcharts are enabled.',
+	'NGN': 'No Gimmick Notes. Gimmick notes are disabled.',
+	'NG': 'No Gimmicks. Modcharts and gimmick notes are disabled.',
+	'HD': 'Hidden. Notes fade out as they approach the judgement line. Also known as Fade Out (FNB, old osu!).',
+	'FI': 'Fade In. Notes fade in as they approach the judgement line. Also known as Sudden (StepMania).',
+	'DM': 'Deathmatch. Die at 0 health.',
+	'PF': 'Perfect. Hit all notes perfectly (Sick!) or die.',
+	'SD': 'Sudden Death. Hit all notes or die.'
 }
 
-let keyUsed = [	
-]
+const modKey = {
+	'L-Side': "Left/Opponent Side",
+	'NMC': 'No Modcharts',
+	'NGN': 'No Gimmick Notes',
+	'NG': 'No Gimmicks',
+	'HD': 'Hidden',
+	'FI': 'Fade In',
+	'DM': 'Deathmatch',
+	'PF': 'Perfect',
+	'SD': 'Sudden Death'
+}
 
-let hasMods = false
+let keyUsed = []
+const modKeyUsed = []
 
 let title = `[${gameInfo.abb} ${serverInfo.abb}] ${songNameVidTitle || songNameReal} (${chartVariationReal}`
-if (isLeftSide) {
+
+if (modLeftSide || modNoModchart || modNoGimmickNotes || modOther.length > 0) {
+	title += ' • '
+}
+
+if (modLeftSide) {
 	keyUsed.push('L-Side')
-	if (!hasMods) {
-		hasMods = true
-		title += ' •'
-	}
-	title += " L-Side"
+	modKeyUsed.push('L-Side')
+	title += "L-Side "
 }
-if (isNoModchart) {
-	keyUsed.push('NMC')
-	if (!hasMods) {
-		hasMods = true
-		title += ' •'
-	}
-	title += " NMC"
-} else if (isNoGimmickNotes) {
-	keyUsed.push('NGN')
-	if (!hasMods) {
-		hasMods = true
-		title += ' •'
-	}
-	title += " NGN"
-} else if (isNoModchart && isNoGimmickNotes) {
+if (modNoModchartStr && modNoGimmickNotes) {
 	keyUsed.push('NG')
-	if (!hasMods) {
-		hasMods = true
-		title += ' •'
-	}
-	title += " NG"
+	modKeyUsed.push('NG')
+	title += "NG "
+} else if (modNoModchart) {
+	keyUsed.push('NMC')
+	modKeyUsed.push('NMC')
+	title += "NMC "
+} else if (modNoGimmickNotes) {
+	keyUsed.push('NGN')
+	modKeyUsed.push('NGN')
+	title += "NGN "
 }
-title += `) ${accuracy.toFixed(2)}% `
-let description = `This is a play of ${serverInfo.name}, an FNF/StepMania-based game on Roblox. Played on ${date}.`
 
-console.log(missCount)
+if (modOther.length !== 0) {
+	for (const mod of modOther) {
+		keyUsed.push(mod)
+		modKeyUsed.push(mod)
+		title += mod
+	
+	}
+}
 
-if (missCount >= 10) {
+title += `) ${resultAccuracy.toFixed(2)}% `
+
+console.log(resultsMiss)
+
+if (resultsMiss >= 10) {
 	keyUsed.push('Clear')
-	title += missCount + "xMiss"
-} else if (1 < missCount && missCount < 10) {
+	title += resultsMiss + "xMiss"
+} else if (1 < resultsMiss && resultsMiss < 10) {
 	keyUsed.push('SDCB')
 	title += "SDCB"
 	// SDCB (SDS)
-} else if (missCount == 1) {
+} else if (resultsMiss == 1) {
 	keyUsed.push('MF')
 	title += "MF"
 	// MF
-} else if (!missCount) {
-	if (1 < goodCount && goodCount < 10) {
+} else if (!resultsMiss) {
+	if (1 < resultsGood && resultsGood < 10) {
 		keyUsed.push('FC', 'SDG')
 		title += "SDG"
 		// SDG
-	} else if (goodCount == 1) {
+	} else if (resultsGood == 1) {
 		keyUsed.push('FC', 'BF')
 		title += "BF"
 		// BF
-	} else if (!goodCount) {
-		if (marvelousCount) {
-			if (perfectCount == 10) {
-				keyUsed.push('PFC', 'WF')
+	} else if (!resultsGood) {
+		if (resultsMarveolus) {
+			if (resultsPerfect == 1) {
+				keyUsed.push('WF')
 				title += "WF"
-			} else if (!perfectCount) {
+			} else if (!resultsPerfect) {
 				keyUsed.push('MFC')
 				title += "MFC"
 			} else {
@@ -164,70 +189,65 @@ if (missCount >= 10) {
 	}
 }
 
-let scoreText
+let description = `This is a replay of ${serverInfo.name}, a Roblox game based on Friday Night Funkin'/StepMania. Played on ${replayDate}.`
 
-if (score2) {
-	scoreText = `Score: ${score1.toLocaleString()}/${score2.toLocaleString()}`
-} else {
-	scoreText = `Score: ${score1.toLocaleString()}`
-}
+let scoreText = `Score: ${[resultsScoreMain, ...resultsScoreAlts].map(score => score.toLocaleString()).join('/')}`
 
 let judgementText
 let ratioText
 
-if (marvelousCount) {
+if (resultsMarveolus) {
 	keyUsed.push('MA', 'PA', 'SA')
-	judgementText = `Judgement: ${marvelousCount.toLocaleString()}/${perfectCount.toLocaleString()}/${goodCount.toLocaleString()}/${okCount.toLocaleString()}/${badCount.toLocaleString()}/${missCount.toLocaleString()}`
-	ratioText = `Ratio (MA/PA/SA): ${(marvelousCount/perfectCount).toFixed(2)}:1/${(perfectCount/goodCount).toFixed(2)}:1/${((marvelousCount+perfectCount)/goodCount).toFixed(2)}:1`
+	judgementText = `Judgement: ${[resultsMarveolus, resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
+	ratioText = `Ratio (MA/PA/SA): ${[resultsMarveolus/resultsPerfect, resultsPerfect/resultsGood, (resultsMarveolus+resultsPerfect)/resultsGood].map(num => num.toFixed(2) + ":1").join('/')}`
 } else {
 	keyUsed.push('SA')
-	judgementText = `Judgement: ${perfectCount.toLocaleString()}/${goodCount.toLocaleString()}/${okCount.toLocaleString()}/${badCount.toLocaleString()}/${missCount.toLocaleString()}`
-	ratioText = `Ratio (SA): ${(perfectCount/goodCount).toFixed(2)}:1`
+	judgementText = `Judgement: ${[resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
+	ratioText = `Ratio (SA): ${(resultsPerfect/resultsGood).toFixed(2)}:1`
 }
 
-let chartVariation = chartVariationReal
-if (chartVariationGame) chartVariation += ` (${chartVariationGame})`
+let chartVariationText = chartVariationReal
+if (chartVariationGame) chartVariationText += ` (in-game: ${chartVariationGame})`
 
 if (extraDesc.length) description += '\n\n' + extraDesc.join('\n\n')
 
 description += `\n\nGame: ${gameInfo.fullName}
 Experience: ${serverInfo.name} (https://www.roblox.com/games/${serverInfo.id})
-Date: ${date}
+Date: ${replayDate}
 Recorder: ${recorder}
 
-Name: ${songNameReal}${songNameGame ? ` (aka. ${songNameGame})`: ''}
-Mod: ${modInfo.name}${modInfo.link ? ` (${modInfo.link})`: ''}
-Chart Variation: ${chartVariation}`
+Name: ${songNameReal}${songNameGame ? ` (in-game: ${songNameGame})`: ''}
+`
 
-if (isLeftSide) description += ", Left/Opponent Side"
-if (isNoModchart) description += ", No Modchart"
-else if (isNoGimmickNotes) description += ", No Gimmick Notes"
-else if (isNoModchart && isNoGimmickNotes) description += ", No Gimmicks"
+if (modInfo) description += `Mod: ${modInfo.name}${modInfo.link ? ` (${modInfo.link})`: ''}
+`
+
+description += `Chart Variation: ${chartVariationText}\n`
+if (modKeyUsed.length) description += `Modifier: ${modKeyUsed.map(mod => modKey[mod]).join(', ')}\n`
 
 if (opponentName || opponentName == "?") description += `\nOpponent: ${opponentName}`
 
 description += `
-
 ${scoreText}
-Accuracy: ${accuracy.toFixed(2)}%
+Accuracy: ${resultAccuracy.toFixed(2)}%
 ${judgementText}
 ${ratioText}`
 
-if (maxComboCount) description += `\nMax. Combo: ${maxComboCount}`
+if (resultsMaxCombo) description += `\nMax. Combo: ${resultsMaxCombo}`
 
 if (keyUsed.length) description += '\n\n' + `Key Description: 
 ${'- '+keyUsed.map(arr => `${arr}: ${key[arr]}`).join('\n- ')}`
 
 description += '\n\nInformation Notes: '
 
-if (marvelousCount) {
+if (resultsMarveolus) {
 	description += "\n- Judgements are sorted from Marvelous, Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
 } else {
 	description += "\n- Judgements are sorted from Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
 }
 
 description += `
-- Some of the terminology are based on Etterna, StepMania, and other DDR derivatives.
+- Some of the terminology are based on Etterna, StepMania, and other related VSRG games.
 - Other information, including credits, may be found on the video and/or the links given.
 - Usually, variations of a chart is for different difficulties, but there are rare cases when it varies by other factors.`
 

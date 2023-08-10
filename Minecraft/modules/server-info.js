@@ -21,3 +21,9 @@ export let mineplexb = {
 	fullName: 'Mineplex (Bedrock Edition)',
 	ip: 'pe.mineplex.com'
 }
+
+export let hiveb = {
+	name: "The Hive",
+	fullName: "The Hive (Bedrock Edition)",
+	ip: "geo.hivebedrock.network"
+}

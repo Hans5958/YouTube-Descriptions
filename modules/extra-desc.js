@@ -6,5 +6,6 @@ export default {
 	'audioReplaced': 'The audio has been replaced/rebuilt manually due to audio issues. Some audio elements may be lost. I apologize.',
 	'copyrightMuted': 'The video is muted due to copyrighted music that I played. I apologize.',
 	'privacyMuted': 'The video is muted for privacy. I apologize.',
+	'privacyReplaced': 'The audio has been replaced/rebuilt manually due to privacy issues. Some audio elements may be lost. I apologize.',
 	'muted': 'The video is muted due to audio issues. I apologize.',
 }

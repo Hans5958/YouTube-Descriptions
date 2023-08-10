@@ -12,23 +12,16 @@ export let mc12 = {
 	version: '1.12.2'
 }
 
-export let mc18 = {
+export let mclatest = {
 	fullName: 'Minecraft: Java Edition',
 	name: 'Minecraft',
 	abb: 'MC',
 	version: '1.18.2'
 }
 
-export let mcb17 = {
+export let mcblatest = {
 	fullName: 'Minecraft: Bedrock Edition',
 	name: 'Minecraft',
 	abb: 'MCB',
-	version: '1.17.2.1'
-}
-
-export let mcb18 = {
-	fullName: 'Minecraft: Bedrock Edition',
-	name: 'Minecraft',
-	abb: 'MCB',
-	version: '1.18.2.3'
+	version: '1.19.50'
 }
