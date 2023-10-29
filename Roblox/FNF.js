@@ -7,7 +7,7 @@ import serverInfos from './modules/server-info.js'
 import modInfos from './modules/rbfnf-mod-info.js'
 
 const data = `
-FNB	Sweetheart			funkspace	Hard		FALSE	FALSE	FALSE	HD	223	307	69	7	0	1	480	288000	288027	98.41		2023/8/7
+FNB	NOMA – Brain Power	Brain Power			FNB Hard	Hard	FALSE	FALSE	FALSE		510	256	168	91	42	74	369	436300	436345	88.57	ItsThaMcGaming	2023/9/6
 `.trim()
 const recorder = 'Open Broadcaster Software (OBS Studio)'
 
@@ -88,7 +88,9 @@ let key = {
 	'FI': 'Fade In. Notes fade in as they approach the judgement line. Also known as Sudden (StepMania).',
 	'DM': 'Deathmatch. Die at 0 health.',
 	'PF': 'Perfect. Hit all notes perfectly (Sick!) or die.',
-	'SD': 'Sudden Death. Hit all notes or die.'
+	'SD': 'Sudden Death. Hit all notes or die.',
+	'GT': 'No Ghost Tapping. Hitting without a note counts as a miss.',
+	'MR': 'Mirror. Notes are reflected from left to right.'
 }
 
 const modKey = {
@@ -100,7 +102,9 @@ const modKey = {
 	'FI': 'Fade In',
 	'DM': 'Deathmatch',
 	'PF': 'Perfect',
-	'SD': 'Sudden Death'
+	'SD': 'Sudden Death',
+	'GT': 'No Ghost Tapping',
+	'MR': 'Mirror'
 }
 
 let keyUsed = []

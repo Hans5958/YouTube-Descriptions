@@ -32,7 +32,7 @@ export default {
 		name: 'JellyBean vs. the Skeletons'
 	},
 	bob: {
-		name: 'Literally every fnf mod ever (Vs Bob)',
+		name: "Literally every fnf mod ever (Vs Bob)/Bob's Onslaught",
 		link: 'https://gamebanana.com/mods/285296'
 	},
 	hehank: {
@@ -238,5 +238,88 @@ export default {
 	vtan: {
 		name: "Vs /v/-tan",
 		link: "https://fridaynightfunking.fandom.com/wiki/Vs_/v/-tan"
+	},
+	arrow: {
+		name: "V.S. Arrow | Arrows Night Funkin'",
+		link: "http://web.archive.org/web/20211227181423/https://gamebanana.com/mods/314767"
+	},
+	bobbosip: {
+		name: "VS. Bob & Bosip",
+		link: "https://fridaynightfunking.fandom.com/wiki/Vs._Bob_and_Bosip"
+	},
+	rush: {
+		name: "Vs. Rush: A 1up Cartoon's Doors Song",
+		link: "https://gamebanana.com/mods/411160"
+	},
+	hotline24: {
+		name: "Hotline 024",
+		link: "https://gamebanana.com/mods/373298"
+	},
+	rifo: {
+		name: "Rifo Quest Funkin'"
+	},
+	baldi: {
+		name: "Baldi's Basics in Funkin'",
+		link: "https://gamebanana.com/mods/329359"
+	},
+	void: {
+		name: "Vs Void",
+		link: "https://gamebanana.com/mods/307819"
+	},
+	ddtob: {
+		name: "Doki Doki Takeover! - BAD ENDING",
+		link: "https://gamebanana.com/mods/386603"
+	},
+	regshow: {
+		name: "Regular Friday Night",
+		link: "https://gamebanana.com/mods/411524"
+	},
+	twinsomnia: {
+		name: "Twinsomnia (Boy 'n' Girl)",
+		link: "https://gamebanana.com/mods/387205"
+	},
+	troubleshootin: {
+		name: "Friday Night Troubleshootin'",
+		link: "https://gamebanana.com/mods/320006"
+	},
+	vloo: {
+		name: "VS Vloo Guy: Ourple Guy D-Sides",
+		link: "https://gamebanana.com/mods/460038"
+	},
+	scp: {
+		name: "Friday Night Foundation",
+		link: "https://gamebanana.com/mods/387484"
+	},
+	therapiss: {
+		name: "Therapiss",
+		link: "https://gamebanana.com/mods/344599"
+	},
+	xevent: {
+		name: "The X Event",
+		link: "https://gamebanana.com/mods/44385"
+	},
+	soyjak: {
+		name: "Soyjak Funkin",
+		link: "https://gamebanana.com/mods/363210"
+	},
+	speedofsound: {
+		name: "Funkin' at the Speed of Sound",
+		link: "https://gamebanana.com/wips/63755"
+	},
+	pocoyo: {
+		name: "V.S. Pocoyo",
+		link: "https://gamebanana.com/mods/413615"
+	},
+	bidenblast: {
+		name: "バイデンブラスト BIDEN BLAST",
+		link: "https://gamebanana.com/mods/427967"
+	},
+	omori: {
+		name: "Vs. OMORI: Blackspace Bossrush",
+		link: "https://gamebanana.com/mods/396313"
+	},
+	longestsoloever: {
+		name: "Vs. longestsoloever",
+		link: "https://gamebanana.com/mods/358645"
 	}
 }
