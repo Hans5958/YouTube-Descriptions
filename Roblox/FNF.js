@@ -7,8 +7,9 @@ import serverInfos from './modules/server-info.js'
 import modInfos from './modules/rbfnf-mod-info.js'
 
 const data = `
-FNB	NOMA – Brain Power	Brain Power			FNB Hard	Hard	FALSE	FALSE	FALSE		510	256	168	91	42	74	369	436300	436345	88.57	ItsThaMcGaming	2023/9/6
+RAT	Manual Blast				Hard	Very Hard	TRUE	FALSE	FALSE		782	351	73	6	4	11	486	97.52	S	615903			2023/10/31
 `.trim()
+
 const recorder = 'Open Broadcaster Software (OBS Studio)'
 
 let extraDesc = [
@@ -39,9 +40,10 @@ let [
 	resultsBad,
 	resultsMiss,
 	resultsMaxCombo,
+	resultAccuracy,
+	resultRating,
 	resultsScoreMain,
 	resultsScoreAltsStr,
-	resultAccuracy,
 	opponentName,
 	replayDateStr
 ] = data.split('	')
@@ -109,42 +111,37 @@ const modKey = {
 
 let keyUsed = []
 const modKeyUsed = []
+const titleMods = []
 
 let title = `[${gameInfo.abb} ${serverInfo.abb}] ${songNameVidTitle || songNameReal} (${chartVariationReal}`
-
-if (modLeftSide || modNoModchart || modNoGimmickNotes || modOther.length > 0) {
-	title += ' • '
-}
 
 if (modLeftSide) {
 	keyUsed.push('L-Side')
 	modKeyUsed.push('L-Side')
-	title += "L-Side "
 }
 if (modNoModchartStr && modNoGimmickNotes) {
 	keyUsed.push('NG')
 	modKeyUsed.push('NG')
-	title += "NG "
 } else if (modNoModchart) {
 	keyUsed.push('NMC')
 	modKeyUsed.push('NMC')
-	title += "NMC "
 } else if (modNoGimmickNotes) {
 	keyUsed.push('NGN')
 	modKeyUsed.push('NGN')
-	title += "NGN "
 }
 
 if (modOther.length !== 0) {
 	for (const mod of modOther) {
 		keyUsed.push(mod)
-		modKeyUsed.push(mod)
-		title += mod
-	
 	}
+	modKeyUsed.push(modOther.join(''))
 }
 
-title += `) ${resultAccuracy.toFixed(2)}% `
+if (modKeyUsed.length > 0) {
+	title += ' • ' + modKeyUsed.join(' ')
+}
+
+title += `) ${resultAccuracy.toFixed(2)}% ${resultRating && resultRating + " "}`
 
 console.log(resultsMiss)
 
@@ -233,7 +230,12 @@ if (opponentName || opponentName == "?") description += `\nOpponent: ${opponentN
 
 description += `
 ${scoreText}
-Accuracy: ${resultAccuracy.toFixed(2)}%
+Accuracy: ${resultAccuracy.toFixed(2)}%`
+
+if (resultRating) description += `
+Grade/Rating: ${resultRating}`
+
+description += `
 ${judgementText}
 ${ratioText}`
 

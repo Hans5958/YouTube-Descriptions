@@ -321,5 +321,21 @@ export default {
 	longestsoloever: {
 		name: "Vs. longestsoloever",
 		link: "https://gamebanana.com/mods/358645"
+	},
+	dlowing: {
+		name: "D'lowing",
+		link: "https://gamebanana.com/mods/386576"
+	},
+	huggywuggy: {
+		name: "Vs Huggy Wuggy",
+		link: "https://gamejolt.com/games/huggywuggyfnf/657741"
+	},
+	rat: {
+		name: "Rap Ability Test OST",
+		link: "https://www.youtube.com/playlist?list=PLkrKr5VllltT6defyNYcDAu9G1BseQzPe, https://www.roblox.com/games/9571630408"
+	},
+	ic0n: {
+		name: "Funknecion Cube",
+		link: "https://gamebanana.com/mods/407689"
 	}
 }

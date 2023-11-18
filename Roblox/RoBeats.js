@@ -4,10 +4,8 @@ import extraDescTemplate from '../modules/extra-desc.js'
 import {roblox as gameInfo} from './modules/game-info.js'
 import serverInfos from './modules/server-info.js'
 
-import modInfos from './modules/rbfnf-mod-info.js'
-
 const data = `
-FNB	Mamigation			mami	Holy		FALSE	FALSE	FALSE		435	131	26	2	4	1	305	302800	302766	99.04	Bigot411	2023/8/23
+F-777 -- Monster Dance Off			Normal 16		713	144	4	8	329	94.59	502820	667451	A		2023/8/29
 `.trim()
 const recorder = 'Open Broadcaster Software (OBS Studio)'
 
@@ -19,7 +17,6 @@ let [
 	songNameReal,
 	songNameGame,
 	songNameVidTitle,
-	modId,
 	chartVariationReal,
 	chartVariationGame,
 	resultsPerfect,
@@ -27,27 +24,31 @@ let [
 	resultsGood,
 	resultsMiss,
 	resultsMaxCombo,
-	resultsScoreMain,
 	resultAccuracy,
+	resultsScore1,
+	resultsScore2,
+	resultsRank,
 	opponentName,
 	replayDateStr
 ] = data.split('	')
 
 const replayDate = new Date(replayDateStr).toLocaleDateString('en-UK',  { year: 'numeric', month: 'long', day: 'numeric' })
 
+songNameReal = songNameReal.replace('--', '–')
+songNameGame = songNameGame.replace('--', '–')
+songNameVidTitle = songNameVidTitle.replace('--', '–')
+
 resultsPerfect = parseInt(resultsPerfect)
 resultsGreat = parseInt(resultsGreat)
 resultsGood = parseInt(resultsGood)
 resultsMiss = parseInt(resultsMiss)
-resultsScoreMain = parseInt(resultsScoreMain)
+resultsScore1 = parseInt(resultsScore1)
+resultsScore2 = parseInt(resultsScore2)
 resultAccuracy = parseFloat(resultAccuracy.replace(',', '.'))
 
 const serverInfo = serverInfos['Robeats']
 
-const modInfo = modInfos[modId] || null
-
 let key = {
-	'Clear': 'Completing a song, also known as passing.',
 	'SDCB': 'Single Digit Combo Break. A single digit amount of miss breaking a full combo.',
 	'MF': 'Miss Flag. A single miss breaking a full combo.',
 	'FC': 'Full Combo. Completing a song without missing a note.',
@@ -57,24 +58,16 @@ let key = {
 	'PA': 'Perfect Ratio. The ratio of perfect notes with great notes.',
 }
 
-const modKey = {
-	'NMC': 'No Modcharts',
-	'NGN': 'No Gimmick Notes',
-	'NG': 'No Gimmicks',
-}
-
 let keyUsed = []
-const modKeyUsed = []
 
-let title = `[${gameInfo.abb} ${serverInfo.abb}] ${songNameVidTitle || songNameReal} (${chartVariationReal}`
+let title = `[${serverInfo.abb}] ${songNameVidTitle || songNameReal} (${chartVariationReal}`
 
 
-title += `) ${resultAccuracy.toFixed(2)}% `
+title += `) ${resultAccuracy.toFixed(2)}% ${resultsRank} `
 
 console.log(resultsMiss)
 
 if (resultsMiss >= 10) {
-	keyUsed.push('Clear')
 	title += resultsMiss + "xMiss"
 } else if (1 < resultsMiss && resultsMiss < 10) {
 	keyUsed.push('SDCB')
@@ -106,7 +99,7 @@ if (resultsMiss >= 10) {
 
 let description = `This is a replay of ${serverInfo.name}, a Roblox game based on StepMania. Played on ${replayDate}.`
 
-let scoreText = `Score: ${resultsScoreMain}`
+let scoreText = `Score: ${[resultsScore1, resultsScore2].filter(a => a).map(score => score.toLocaleString()).join('/')}}`
 
 let judgementText
 let ratioText
@@ -129,17 +122,14 @@ Recorder: ${recorder}
 Name: ${songNameReal}${songNameGame ? ` (in-game: ${songNameGame})`: ''}
 `
 
-if (modInfo) description += `Mod: ${modInfo.name}${modInfo.link ? ` (${modInfo.link})`: ''}
-`
-
 description += `Chart Variation: ${chartVariationText}\n`
-if (modKeyUsed.length) description += `Modifier: ${modKeyUsed.map(mod => modKey[mod]).join(', ')}\n`
 
 if (opponentName || opponentName == "?") description += `\nOpponent: ${opponentName}`
 
 description += `
 ${scoreText}
 Accuracy: ${resultAccuracy.toFixed(2)}%
+Rank: ${resultsRank}
 ${judgementText}
 ${ratioText}`
 

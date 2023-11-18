@@ -28,5 +28,23 @@ export default {
 		full: "Drive World",
 		abb: "DW",
 		id: 10704789056
+	},
+	Robeats: {
+		name: "RoBeats",
+		full: "RoBeats",
+		abb: "RoBeats",
+		id: 698448212
+	},
+	Arsenal: {
+		name: "Arsenal",
+		full: "Arsenal",
+		abb: "",
+		id: 286090429
+	},
+	RAT: {
+		name: "Rap Ability Test",
+		full: "Rap Ability Test",
+		abb: "RAT",
+		id: 9571630408
 	}
 }
