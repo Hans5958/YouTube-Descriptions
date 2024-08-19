@@ -21,7 +21,7 @@ let notesShort = getShortForm(notes)
 let videoSource = [
 	"Piano From Above v1.1.0 (w/ WinMMWRP)",
 	// "NVIDIA ShadowPlay"
-	"Open Broadcaster Software (OBS) v29.1.3"
+	"Open Broadcaster Software (OBS) v30.1.2"
 ]
 
 let audioSource = [
@@ -51,7 +51,7 @@ description += `
 
 ━━━━━━━━
 
-*Technical Information*
+## Technical Information
 
 File Name: ${fileName}
 File Size: ${fileSize}
@@ -65,13 +65,13 @@ Soundfont: ${soundfont.join(', ')}`
 
 description += `
 
-*Specifications* (Acer Nitro 5 AN515-57)
+## Specifications (Acer Nitro 5 AN515-57, modified)
 
 CPU: Intel Core i7-11800H @ 2.3 GHz
-RAM: 16 GB DDR4 SDRAM @ 3200 MHz
-Storage: 512 GB NVMe SSD
+RAM: 32 GB (2 x 16 GB) DDR4 SDRAM @ 3200 MHz (dual channel)
+Storage: 512 GB + 1 TB NVMe SSD
 GPU: NVIDIA GeForce RTX 3060 Laptop GPU
-OS: Windows 10 Home Single Language x64 (22H2; OS Build 19045.3393)
+OS: Windows 10 Home Single Language x64 (22H2; OS Build 19045.4529)
 Resolution: 1920x1080`
 
 printInfo(title, description)

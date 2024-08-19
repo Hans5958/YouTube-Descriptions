@@ -7,7 +7,7 @@ import serverInfos from './modules/server-info.js'
 import modInfos from './modules/rbfnf-mod-info.js'
 
 const data = `
-RAT	Manual Blast				Hard	Very Hard	TRUE	FALSE	FALSE		782	351	73	6	4	11	486	97.52	S	615903			2023/10/31
+FNB	Chroma – Sayonara Planet Wars	Sayonara Planet Wars	Sayonara Planet Wars	voltex	Advanced		FALSE	FALSE	FALSE		378	168	21	3	0	0	570	99.5		391650			2024/1/26
 `.trim()
 
 const recorder = 'Open Broadcaster Software (OBS Studio)'
@@ -17,8 +17,8 @@ let extraDesc = [
 	// `This is counted as a fail. The ending resulted in a kick in which is executed before the ending screen. No information can be obtained for the statistics. \n\nYou can see another run of mine in which I turned off the modcharts to get the statistics: https://youtu.be/qTAo7I8IDxA`,
 	// "I wanted to see how I perform on these stream maps in the morning. This is one of the three, which I uploaded in series.",
 	// `This is a trial of me recording plays in full screen. This type of plays are going to be occassional; not always.`,
-	extraDescTemplate['to1080pUpscale'],
-	// extraDescTemplate['privacyReplaced']
+	extraDescTemplate['480pto1080pUpscaleGameplay'],
+	// extraDescTemplate['privacyReplaced'],
 ]
 
 let [
