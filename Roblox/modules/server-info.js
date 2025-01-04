@@ -46,5 +46,42 @@ export default {
 		full: "Rap Ability Test",
 		abb: "RAT",
 		id: 9571630408
-	}
+	},
+	AFN: {
+		name: "Project: Afternight",
+		full: "Project: Afternight",
+		abb: "AFN",
+		id: 13042495892
+	},
+	SFR: {
+		name: "Sunset Friday Reborn",
+		full: "Sunset Friday Reborn",
+		abb: "SFR",
+		id: 14778432599
+	},
+	FFe: {
+		name: "Funky Fever",
+		full: "Funky Fever",
+		abb: "FFe",
+		id: 13717778834
+	},
+	SF: {
+		name: "Starlight Funk",
+		full: "Starlight Funk",
+		abb: "SF",
+		id: 8551510442
+	},
+	PFN: {
+		name: "Project Funk Night",
+		full: "Project Funk Night",
+		abb: "PFN",
+		id: 13022699699
+	},
+	MF: {
+		name: "MetaFunk",
+		full: "MetaFunk",
+		abb: "MF",
+		id: 13022699699
+	},
+	
 }

@@ -362,7 +362,7 @@ export default {
 		link: 'https://gamebanana.com/mods/417560'
 	},
 	voiid: {
-		name: 'Voiid Chronicle',
+		name: 'Voiid Chronicles',
 		link: 'https://gamebanana.com/mods/372018'
 	},
 	funkbot: {
@@ -485,7 +485,7 @@ export default {
 	},
 	soft2: {
 		name: "Friday Night Funkin': Soft (v2)",
-		link: 'https://gamebanana.com/mods/523551,
+		link: 'https://gamebanana.com/mods/523551',
 	},
 	qt: {
 		name: 'QT Mod (v1)',
@@ -506,6 +506,46 @@ export default {
 	llyc: {
 		name: 'Livid Lycanthrope',
 		link: 'https://gamebanana.com/mods/333876'
+	},
+	matt3: {
+		name: "V.S Matt Wiik 3+",
+		link: "https://gamebanana.com/mods/293670"
+	},
+	tricky: {
+		name: "The Tricky Mod",
+		link: "https://gamebanana.com/mods/44334"
+	},
+	ethernet: {
+		name: 'Vs Ethernet',
+		link: 'https://gamejolt.com/games/ethernetconnection/644199'
+	},
+	catfight: {
+		name: 'FNF: Catfight /ᐠ - ˕ -マ',
+		link: 'https://gamebanana.com/mods/473694'
+	},
+	fnafsfm2: {
+		name: "Vs. FNaF 2",
+		link: "https://gamebanana.com/mods/411376"
+	},
+	fnafsfm3: {
+		name: "Vs. FNaF 3",
+		link: "https://gamebanana.com/mods/495545"
+	},
+	breakerb: {
+		name: 'Breaker Bundle',
+		link: 'https://gamebanana.com/mods/450685'
+	},
+	lethalc1s: {
+		name: 'Lethal Company One Shot (Demo)',
+		link: 'https://gamebanana.com/mods/491185'
+	},
+	doorstuck: {
+		name: 'VS Door Stuck',
+		link: 'https://gamebanana.com/wips/61291'
+	},
+	playableendgamenoimix: {
+		name: 'Endgame (All Stars Noimix) Playable',
+		link: 'https://gamebanana.com/mods/496485'
 	},
 	ZZZ_sample: {
 		name: '',

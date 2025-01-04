@@ -7,17 +7,23 @@ import serverInfos from './modules/server-info.js'
 import modInfos from './modules/rbfnf-mod-info.js'
 
 const data = `
-FNB	Chroma – Sayonara Planet Wars	Sayonara Planet Wars	Sayonara Planet Wars	voltex	Advanced		FALSE	FALSE	FALSE		378	168	21	3	0	0	570	99.5		391650			2024/1/26
+SF	Astral Projection			hotline24	Hard		FALSE	FALSE	FALSE		324	203	71	6	2	3		97.16	S	185100			2024/7/5
 `.trim()
 
 const recorder = 'Open Broadcaster Software (OBS Studio)'
 
 let extraDesc = [
+
+	// "Here are the first replays of Project: Afternight, a relatively new Friday Night Funkin' game on Roblox. It is quite similar to FNB with improvements here and there. You could say that it is a spiritual successor of it.",
+	"Basically FNF: Remix just dropped a new update (well, it's been a while when you consider the time when I publish this), so I'll give it a go by playing some of the new songs, along with some recording to upload here.",
 	// `Here are the last Malediction plays that I play on Friday Night Bloxxin'. As of circa 28 December 2022, the later update removeed this song along with Curse's related assets. The upload of the Bloxxin' Mix on YouTube has now been privatized. We'll meet again soon, my friend.`,
-	// `This is counted as a fail. The ending resulted in a kick in which is executed before the ending screen. No information can be obtained for the statistics. \n\nYou can see another run of mine in which I turned off the modcharts to get the statistics: https://youtu.be/qTAo7I8IDxA`,
 	// "I wanted to see how I perform on these stream maps in the morning. This is one of the three, which I uploaded in series.",
+	// "The video showcases one of the April Fools joke on Project: Afternight at that time. There are no song on Indie Cross other than Saness. Choosing any other song would play Saness instead.",
+	// "This is a part of a series of videos where I play various Friday Night Funkin' games in Roblox that I haven't played much. All the games are listed below, as usual, along with the link to the games. Stats availability varies; may not available in some games."s
+	'-',
 	// `This is a trial of me recording plays in full screen. This type of plays are going to be occassional; not always.`,
 	extraDescTemplate['480pto1080pUpscaleGameplay'],
+	// extraDescTemplate['audioAddedFromSilent']
 	// extraDescTemplate['privacyReplaced'],
 ]
 
@@ -143,7 +149,7 @@ if (modKeyUsed.length > 0) {
 
 title += `) ${resultAccuracy.toFixed(2)}% ${resultRating && resultRating + " "}`
 
-console.log(resultsMiss)
+console.log(resultsGood)
 
 if (resultsMiss >= 10) {
 	keyUsed.push('Clear')
@@ -165,7 +171,7 @@ if (resultsMiss >= 10) {
 		keyUsed.push('FC', 'BF')
 		title += "BF"
 		// BF
-	} else if (!resultsGood) {
+	} else if (!resultsGood && !isNaN(resultsGood)) {
 		if (resultsMarveolus) {
 			if (resultsPerfect == 1) {
 				keyUsed.push('WF')
@@ -190,27 +196,37 @@ if (resultsMiss >= 10) {
 	}
 }
 
-let description = `This is a replay of ${serverInfo.name}, a Roblox game based on Friday Night Funkin'/StepMania. Played on ${replayDate}.`
+let description = ""
+
+const genericDescription = `This is a replay of ${serverInfo.name}, a Roblox game based on Friday Night Funkin'/StepMania. Played on ${replayDate}.`
 
 let scoreText = `Score: ${[resultsScoreMain, ...resultsScoreAlts].map(score => score.toLocaleString()).join('/')}`
 
 let judgementText
 let ratioText
 
-if (resultsMarveolus) {
+if (!isNaN(resultsMarveolus)) {
 	keyUsed.push('MA', 'PA', 'SA')
 	judgementText = `Judgement: ${[resultsMarveolus, resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
 	ratioText = `Ratio (MA/PA/SA): ${[resultsMarveolus/resultsPerfect, resultsPerfect/resultsGood, (resultsMarveolus+resultsPerfect)/resultsGood].map(num => num.toFixed(2) + ":1").join('/')}`
-} else {
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && isNaN(resultsBad)) {
 	keyUsed.push('SA')
 	judgementText = `Judgement: ${[resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
 	ratioText = `Ratio (SA): ${(resultsPerfect/resultsGood).toFixed(2)}:1`
+} else {
+	judgementText = `Misses: ${resultsMiss}`
 }
 
 let chartVariationText = chartVariationReal
 if (chartVariationGame) chartVariationText += ` (in-game: ${chartVariationGame})`
 
-if (extraDesc.length) description += '\n\n' + extraDesc.join('\n\n')
+if (extraDesc.length) {
+	if (extraDesc.find(i => i === '-')) {
+		description += extraDesc.map(i => i === "-" ? genericDescription : i).join('\n\n')
+	} else {
+		description += genericDescription + '\n\n' + extraDesc.join('\n\n')
+	}
+}
 
 description += `\n\nGame: ${gameInfo.fullName}
 Experience: ${serverInfo.name} (https://www.roblox.com/games/${serverInfo.id})
@@ -235,9 +251,15 @@ Accuracy: ${resultAccuracy.toFixed(2)}%`
 if (resultRating) description += `
 Grade/Rating: ${resultRating}`
 
-description += `
+if (ratioText) {
+	description += `
 ${judgementText}
 ${ratioText}`
+} else {
+	description += `
+${judgementText}`
+}
+
 
 if (resultsMaxCombo) description += `\nMax. Combo: ${resultsMaxCombo}`
 
@@ -246,10 +268,12 @@ ${'- '+keyUsed.map(arr => `${arr}: ${key[arr]}`).join('\n- ')}`
 
 description += '\n\nInformation Notes: '
 
-if (resultsMarveolus) {
+if (!isNaN(resultsMarveolus)) {
 	description += "\n- Judgements are sorted from Marvelous, Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
-} else {
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && isNaN(resultsBad)) {
 	description += "\n- Judgements are sorted from Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
+} else {
+	description += "\n- Only misses is shown here due to no final count of other judgements."
 }
 
 description += `
