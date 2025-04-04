@@ -1,12 +1,12 @@
 import printInfo from './modules/pretty-print-info.js'
 
-let songTitle = "Moskau"
-let fileName = "Dschinghis Khan - Moskau Black V2 Final.mid"
-let fileSize = "136 MB"
-let fileAuthor = "Carlos S. M."
-let originalLink = "https://youtu.be/IdjEAhfYlak"
-let notes = 17889268
-let runType = "Legit Run"
+let songTitle = "Highscore"
+let fileName = "Highscore M4 F1.mid"
+let fileSize = "289 MB"
+let fileAuthor = "fds MIDIs/devised_definition, Planet Hero"
+let originalLink = "https://youtu.be/Cgxq2jc1mRM"
+let notes = 37858993
+let runType = "Legit Run (Guest PC 1)"
 
 const getShortForm = num => {
 	let numStr = (num / 10**(Math.floor((num.toString().length - 1) / 3)*3)).toPrecision(3)
@@ -21,26 +21,26 @@ let notesShort = getShortForm(notes)
 let videoSource = [
 	"Piano From Above v1.1.0 (w/ WinMMWRP)",
 	// "NVIDIA ShadowPlay"
-	"Open Broadcaster Software (OBS) v30.1.2"
+	"Open Broadcaster Software (OBS) v30.2.2"
 ]
 
 let audioSource = [
-	"OmniMIDI v14.8.4"
+	"OmniMIDI v14.8.5"
 ]
 
 let soundfont = [
 	// "xp50houz",
-	// "Keppy's Steinway Piano/Steinway D-274 — 7.4 Dream",
+	"Keppy's Steinway Piano/Steinway D-274 — 7.4 Dream",
 	// "K-Bass Deluxe 3 — Concert (default) (by Lil Blue_Inkling/Pon MIDIS)",
 	// "Arachno SoundFont 1.0",
-	"Yamaha C3 Neo Grand Piano"
+	// "Yamaha C3 Neo Grand Piano"
+	// "LSP Mixable Concert Grand (unknown ver., possibly 1.2.9), No Reverb, SR1928"
 ]
 
 let description = `
-An arrangement by Carlos S. M.. I would say that it is quite repetitive, but hey, I liked the song.
+Let's do something different. I got an access to this office PC. It's an Acer Veriton X, has the 12th generation of i7, and by comparing the runs that I did here with my laptop, it's more powerful, somehow (generation differences? laptop vs PC?). 
 
-In this edition on Soundfont Exploration, we got Yamaha C3 Neo Grand Piano from 27, a newer one from him/her. I'd say it has a unique tone, but that would be kind of boring. Hear it by yourself, especially in such long arrangement.
-`.trim()
+I got time to do some Black MIDIs here, as well as doing runs for comparisons. Since the access is just temporary, I call it a Guest PC, as in, this PC is a guest on this channel. All of this is recorded on August 2024.`.trim()
 let title = `[Black MIDI] ${songTitle} (${notesShort}) — ${runType}`
 
 // This run is done for a comparison, as seen on https://www.youtube.com/watch?v=012pMquzhhM.
@@ -65,13 +65,13 @@ Soundfont: ${soundfont.join(', ')}`
 
 description += `
 
-## Specifications (Acer Nitro 5 AN515-57, modified)
+## Specifications (Acer Veriton X, unknown variation)
 
-CPU: Intel Core i7-11800H @ 2.3 GHz
-RAM: 32 GB (2 x 16 GB) DDR4 SDRAM @ 3200 MHz (dual channel)
-Storage: 512 GB + 1 TB NVMe SSD
-GPU: NVIDIA GeForce RTX 3060 Laptop GPU
-OS: Windows 10 Home Single Language x64 (22H2; OS Build 19045.4529)
+CPU: Intel Core i7-12700 @ 2.1 GHz (no overclock)
+RAM: 16 GB DDR4 SDRAM @ 3200 MHz
+Storage: 2 TB SATA HDD
+GPU: Intel UHD Graphics 770 (integrated)
+OS: Windows 11 Home Single Language x64 (23H2; OS Build 22631.3880)
 Resolution: 1920x1080`
 
 printInfo(title, description)

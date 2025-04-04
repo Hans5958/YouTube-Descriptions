@@ -17,7 +17,7 @@ export default {
 	},
 	indie: {
 		name: 'Indie Cross',
-		link: 'https://gamejolt.com/games/indiecross/643540'
+		link: 'https://gamejolt.com/games/indiecross/643540, https://www.youtube.com/watch?v=OjHulHJQZPs'
 	},
 	shaggy: {
 		name: 'The Shaggy Mod/VS Shaggy',
@@ -546,6 +546,34 @@ export default {
 	playableendgamenoimix: {
 		name: 'Endgame (All Stars Noimix) Playable',
 		link: 'https://gamebanana.com/mods/496485'
+	},
+	hitsingle: {
+		name: 'Hit Single',
+		link: 'https://gamebanana.com/mods/395039'
+	},
+	brick: {
+		name: 'VS Brick',
+		link: 'https://gamebanana.com/mods/343432, https://www.youtube.com/watch?v=YNJxU7xaGMc'
+	},
+	mobs: {
+		name: 'vs mobs',
+		link: 'https://gamebanana.com/mods/444380, https://www.youtube.com/watch?v=NAAzMdyu32A'
+	},
+	bside: {
+		name: 'B-Sides Remixes',
+		link: 'https://gamebanana.com/mods/42724'
+	},
+	starcatcher: {
+		name: 'StarCatcher',
+		link: 'https://gamebanana.com/mods/44335'
+	},
+	ploobin: {
+		name: "Ploobin'",
+		link: 'https://gamebanana.com/mods/558586'
+	},
+	thunderin: {
+		name: "Friday Night Thunderin'",
+		link: 'https://gamebanana.com/mods/319994, https://www.youtube.com/watch?v=1bbfv7xC0Ak'
 	},
 	ZZZ_sample: {
 		name: '',

@@ -15,7 +15,8 @@ const recorder = 'Open Broadcaster Software (OBS Studio)'
 let extraDesc = [
 
 	// "Here are the first replays of Project: Afternight, a relatively new Friday Night Funkin' game on Roblox. It is quite similar to FNB with improvements here and there. You could say that it is a spiritual successor of it.",
-	"Basically FNF: Remix just dropped a new update (well, it's been a while when you consider the time when I publish this), so I'll give it a go by playing some of the new songs, along with some recording to upload here.",
+
+	// "Basically FNF: Remix just dropped a new update (well, it's been a while when you consider the time when I publish this), so I'll give it a go by playing some of the new songs, along with some recording to upload here.",
 	// `Here are the last Malediction plays that I play on Friday Night Bloxxin'. As of circa 28 December 2022, the later update removeed this song along with Curse's related assets. The upload of the Bloxxin' Mix on YouTube has now been privatized. We'll meet again soon, my friend.`,
 	// "I wanted to see how I perform on these stream maps in the morning. This is one of the three, which I uploaded in series.",
 	// "The video showcases one of the April Fools joke on Project: Afternight at that time. There are no song on Indie Cross other than Saness. Choosing any other song would play Saness instead.",
@@ -53,6 +54,10 @@ let [
 	opponentName,
 	replayDateStr
 ] = data.split('	')
+
+songNameReal = songNameReal.replace('--', '–')
+songNameGame = songNameGame.replace('--', '–')
+songNameVidTitle = songNameVidTitle.replace('--', '–')
 
 const replayDate = new Date(replayDateStr).toLocaleDateString('en-UK',  { year: 'numeric', month: 'long', day: 'numeric' })
 
@@ -98,7 +103,9 @@ let key = {
 	'PF': 'Perfect. Hit all notes perfectly (Sick!) or die.',
 	'SD': 'Sudden Death. Hit all notes or die.',
 	'GT': 'No Ghost Tapping. Hitting without a note counts as a miss.',
-	'MR': 'Mirror. Notes are reflected from left to right.'
+	'MR': 'Mirror. Notes are reflected from left to right.',
+	'NJ': 'No Jumps. Doubles, quads, jumps, chords, etc are removed.',
+	'NDT': 'No Double Tails. Notes with two or more holds are removed. (?)',
 }
 
 const modKey = {
@@ -112,7 +119,9 @@ const modKey = {
 	'PF': 'Perfect',
 	'SD': 'Sudden Death',
 	'GT': 'No Ghost Tapping',
-	'MR': 'Mirror'
+	'MR': 'Mirror',
+	'NJ': 'No Jumps',
+	'NDT': 'No Double Tails',
 }
 
 let keyUsed = []
@@ -139,12 +148,13 @@ if (modNoModchartStr && modNoGimmickNotes) {
 if (modOther.length !== 0) {
 	for (const mod of modOther) {
 		keyUsed.push(mod)
+		modKeyUsed.push(mod)
 	}
-	modKeyUsed.push(modOther.join(''))
 }
 
 if (modKeyUsed.length > 0) {
-	title += ' • ' + modKeyUsed.join(' ')
+	if (modKeyUsed.filter(s => s.length > 2).length) title += ' • ' + modKeyUsed.join(' ')
+	else title += ' • ' + modKeyUsed.join('')
 }
 
 title += `) ${resultAccuracy.toFixed(2)}% ${resultRating && resultRating + " "}`
@@ -205,13 +215,19 @@ let scoreText = `Score: ${[resultsScoreMain, ...resultsScoreAlts].map(score => s
 let judgementText
 let ratioText
 
+console.log(resultsMarveolus, resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss)
+
 if (!isNaN(resultsMarveolus)) {
 	keyUsed.push('MA', 'PA', 'SA')
 	judgementText = `Judgement: ${[resultsMarveolus, resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
 	ratioText = `Ratio (MA/PA/SA): ${[resultsMarveolus/resultsPerfect, resultsPerfect/resultsGood, (resultsMarveolus+resultsPerfect)/resultsGood].map(num => num.toFixed(2) + ":1").join('/')}`
-} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && isNaN(resultsBad)) {
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && !isNaN(resultsBad)) {
 	keyUsed.push('SA')
-	judgementText = `Judgement: ${[resultsPerfect, resultsGood, resultsOk, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
+	judgementText = `Judgement: ${[resultsPerfect, resultsGood, resultsOk, resultsMiss].map(num => num.toLocaleString()).join('/')}`
+	ratioText = `Ratio (SA): ${(resultsPerfect/resultsGood).toFixed(2)}:1`
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsBad)) {
+	keyUsed.push('SA')
+	judgementText = `Judgement: ${[resultsPerfect, resultsGood, resultsBad, resultsMiss].map(num => num.toLocaleString()).join('/')}`
 	ratioText = `Ratio (SA): ${(resultsPerfect/resultsGood).toFixed(2)}:1`
 } else {
 	judgementText = `Misses: ${resultsMiss}`
@@ -270,8 +286,10 @@ description += '\n\nInformation Notes: '
 
 if (!isNaN(resultsMarveolus)) {
 	description += "\n- Judgements are sorted from Marvelous, Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
-} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && isNaN(resultsBad)) {
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsOk) && !isNaN(resultsBad)) {
 	description += "\n- Judgements are sorted from Perfect (Sick), Great (Good), Good (OK), Bad, and Miss"
+} else if (!isNaN(resultsPerfect) && !isNaN(resultsGood) && !isNaN(resultsBad)) {
+	description += "\n- Judgements are sorted from Perfect (Sick), Great (Good), Bad, and Miss"
 } else {
 	description += "\n- Only misses is shown here due to no final count of other judgements."
 }
